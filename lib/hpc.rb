@@ -4,11 +4,14 @@ require 'open-uri'
 # Hydrometeorological Prediction Center
 
 class HPC
-  def url
+
+  attr_accessor :url, :discussion_urls
+
+  def self.url
     "http://www.hpc.ncep.noaa.gov"
   end
 
-  def discussion_urls
+  def self.get_discussion_urls
 
     discussion_urls = []
 
@@ -20,7 +23,19 @@ class HPC
     discussion_urls
   end
 
-end
+  def self.get_discussions
+    discussion_hash = {}
 
-a = HPC.new
-puts a.discussion_urls
+    self.get_discussion_urls.each do |url|
+      doc = Nokogiri::HTML(open(url))
+
+      disc_content = nil
+
+      doc.xpath('//div[@id = "printarea"]').each do |i|
+        disc_content = i.text
+      end
+      discussion_hash[url] = disc_content
+    end
+    discussion_hash
+  end
+end

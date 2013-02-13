@@ -1,2 +1,3 @@
 TODO:
-Add your code to lib/<%= name %>.rb
+- For each discussion, need to check the current RSS feed and see if
+  things need to be updated.
