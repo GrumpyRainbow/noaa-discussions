@@ -3,6 +3,8 @@ Dir[Dir.pwd + "/" + "lib/*.rb"].each { |file| require file }
 require 'digest/sha1'
 require 'rss'
 
+feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
+
 case ARGV[0]
 
 when "HPC"
@@ -11,11 +13,7 @@ when "CPC"
   @obj = CPC.new
 end
 
-@url_array = @obj.get_discussion_urls
-
 discussion_hash = @obj.get_discussions
-
-feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
 
 discussion_hash.keys.each do |key|
 
