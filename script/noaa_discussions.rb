@@ -5,11 +5,13 @@ require 'rss'
 
 feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
 
-@obj = case ARGV[0]
+# @obj = case ARGV[0]
+# 
+#        when "HPC" then HPC.new
+#        when "CPC" then CPC.new
+#        end
 
-       when "HPC" then HPC.new
-       when "CPC" then CPC.new
-       end
+@obj = HPC.new
 
 discussion_hash = @obj.get_discussions
 
