@@ -1,6 +1,7 @@
 Dir[Dir.pwd + "/" + "lib/*.rb"].each { |file| require file }
 
 require 'digest/sha1'
+require 'rss'
 
 case ARGV[0]
 
