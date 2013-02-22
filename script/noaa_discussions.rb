@@ -2,6 +2,8 @@ Dir[Dir.pwd + "/" + "lib/*.rb"].each { |file| require file }
 
 require 'digest/sha1'
 
+puts "Hit this!"
+
 case ARGV[0]
 
 when "HPC"
