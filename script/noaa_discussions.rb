@@ -37,11 +37,11 @@ discussion_hash.keys.each do |key|
       item.link = key
       item.title = title
       item.updated = Time.now.to_s
-      item.description = hpc_discussions[key]
+      item.description = discussion_hash[key]
     end
   end
 
-  new_rss_sha = Digest::SHA1.hexdigest rss
+  new_rss_sha = Digest::SHA1.hexdigest rss.to_s
 
   file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "r")
   old_rss_sha = Digest::SHA1.hexdigest file.read
