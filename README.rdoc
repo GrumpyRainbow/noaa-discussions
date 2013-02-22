@@ -1,3 +1,0 @@
-== noaa-discussions
-
-A gem that provides...
