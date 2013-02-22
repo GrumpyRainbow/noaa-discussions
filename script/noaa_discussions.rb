@@ -2,8 +2,6 @@ Dir[Dir.pwd + "/" + "lib/*.rb"].each { |file| require file }
 
 require 'digest/sha1'
 
-puts "Hit this!"
-
 case ARGV[0]
 
 when "HPC"
@@ -44,16 +42,11 @@ discussion_hash.keys.each do |key|
 
   new_rss_sha = Digest::SHA1.hexdigest rss
 
-  puts "new_rss_sha: #{new_rss_sha}"
-
   file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "r")
   old_rss_sha = Digest::SHA1.hexdigest file.read
   file.close
 
-  puts "old_rss_sha: #{old_rss_sha}"
-
   if new_rss_sha != old_rss_sha
-    puts "The SHAs were different"
     file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
       f.write(rss)
     end
