@@ -46,7 +46,7 @@ discussion_hash.keys.each do |key|
   if new_rss_sha != old_rss_sha
     file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
       f.write(rss)
+      f.close
     end
-    file.close
   end
 end

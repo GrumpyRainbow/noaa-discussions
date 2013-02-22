@@ -40,7 +40,7 @@ class HPC
 
     discussion_urls = []
 
-    doc = Nokogiri::HTML(open(self.url + "/html/discuss.shtml"))
+    doc = Nokogiri::HTML(open(self.url + "/html/discuss.shtml").read)
 
     doc.xpath('//ul/li/a[starts-with(@href, "/discussions/hpcdiscussions")]').each do |i|
       discussion_urls << url + i.attributes["href"]
@@ -52,7 +52,7 @@ class HPC
     discussion_hash = {}
 
     self.get_discussion_urls.each do |url|
-      doc = Nokogiri::HTML(open(url))
+      doc = Nokogiri::HTML(open(url).read)
 
       disc_content = nil
 
