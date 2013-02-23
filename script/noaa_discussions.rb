@@ -1,6 +1,6 @@
 feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
 
-Dir.glob("#{feed_path}noaa-discussions/***").each do |file|
+Dir.glob("#{feed_path}noaa-discussions/**/**").each do |file|
   require file if file.include?(".rb")
 end
 
