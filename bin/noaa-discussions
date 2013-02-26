@@ -1,14 +1,12 @@
-feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
+#!/usr/bin/env ruby
 
-Dir.glob("#{feed_path}noaa-discussions/**/**").each do |file|
-  require file if file.include?(".rb")
-end
-
+$LOAD_PATH.push File.join(File.dirname(__FILE__), "/../lib")
+require 'hpc'
+require 'cpc'
 require 'digest/sha1'
 require 'rss'
 
-
-ARGV[0] = "HPC"
+feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
 
 @obj = case ARGV[0]
 
