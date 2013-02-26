@@ -20,6 +20,8 @@ discussion_hash.keys.each do |key|
 
   discussion_id = key.split('=').last
 
+  puts "discussion_id: #{discussion_id}"
+
   title = @obj.get_discussion_title(discussion_id)
 
   # Create the RSS.  Read the RSS from the server.  Convert both to SHA.
@@ -50,6 +52,8 @@ discussion_hash.keys.each do |key|
     file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.atom", "w") do |f|
       f.write(rss)
       f.close
+      puts "wrote to #{feed_path}#{ARGV[0].downcase}/#{discussion_id}.atom"
     end
   end
+  puts "script finished"
 end
