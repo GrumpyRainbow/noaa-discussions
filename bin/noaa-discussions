@@ -55,5 +55,5 @@ discussion_hash.keys.each do |key|
       puts "wrote to #{feed_path}#{ARGV[0].downcase}/#{discussion_id}.atom"
     end
   end
-  puts "script finished"
 end
+puts "script finished"
