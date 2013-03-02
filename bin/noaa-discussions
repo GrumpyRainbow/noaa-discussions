@@ -32,14 +32,14 @@ discussion_hash.keys.each do |key|
 
   rss = RSS::Maker.make("atom") do |maker|
     maker.channel.author = "NOAA"
-    maker.channel.updated = DateTime.rfc3339(DateTime.now.to_s)
+    maker.channel.updated = DateTime.rfc3339(DateTime.now.to_s).to_s
     maker.channel.about = "http://www.grumpyrainbow.com/feeds/#{ARGV[0].downcase}/#{discussion_id}"
     maker.channel.title = "#{ARGV[0].downcase} - #{title}"
 
     maker.items.new_item do |item|
       item.link = key
       item.title = title
-      item.updated = DateTime.rfc3339(DateTime.now.to_s)
+      item.updated = DateTime.rfc3339(DateTime.now.to_s).to_s
       item.description = discussion_hash[key]
     end
   end
