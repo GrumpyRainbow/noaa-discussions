@@ -35,13 +35,15 @@ discussion_hash.keys.each do |key|
     maker.channel.updated = Time.now.rfc822
     maker.channel.about = "http://www.grumpyrainbow.com/feeds/#{ARGV[0].downcase}/#{discussion_id}"
     maker.channel.title = "#{ARGV[0].downcase} - #{title}"
+    maker.channel.link = key
+    maker.channel.description = discussion_hash[key]
 
-    maker.items.new_item do |item|
-      item.link = key
-      item.title = title
-      item.updated = Time.now.rfc822
-      item.description = discussion_hash[key]
-    end
+    # maker.items.new_item do |item|
+    #   item.link = key
+    #   item.title = title
+    #   item.updated = Time.now.rfc822
+    #   item.description = discussion_hash[key]
+    # end
   end
 
   file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
