@@ -6,7 +6,6 @@ require 'cpc'
 require 'digest/sha1'
 require 'rss'
 require 'time'
-require 'date'
 
 feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
 
@@ -22,34 +21,24 @@ discussion_hash.keys.each do |key|
 
   discussion_id = key.split('=').last
 
-  puts "discussion_id: #{discussion_id}"
-
   title = @obj.get_discussion_title(discussion_id)
 
-  # Create the RSS.  Read the RSS from the server.  Convert both to SHA.
-  # Compare the SHAs.  If they differ, copy the new RSS to the server.
-  # If not, on to the next one.
+  if ARGV[0] == "HPC"
 
-  rss = RSS::Maker.make("2.0") do |maker|
-    maker.channel.author = "NOAA"
-    maker.channel.updated = Time.now.rfc822
-    maker.channel.about = "http://www.grumpyrainbow.com/feeds/#{ARGV[0].downcase}/#{discussion_id}"
-    maker.channel.title = "#{ARGV[0].downcase} - #{title}"
-    maker.channel.link = key
-    maker.channel.description = discussion_hash[key]
+    rss = RSS::Maker.make("2.0") do |maker|
+      maker.channel.author = "NOAA"
+      maker.channel.updated = Time.now.rfc822
+      maker.channel.about = "http://www.grumpyrainbow.com/feeds/#{ARGV[0].downcase}/#{discussion_id}"
+      maker.channel.title = "#{ARGV[0].downcase} - #{title} - #{Time.now.rfc822}"
+      maker.channel.link = key
+      maker.channel.description = discussion_hash[key]
+    end
 
-    # maker.items.new_item do |item|
-    #   item.link = key
-    #   item.title = title
-    #   item.updated = Time.now.rfc822
-    #   item.description = discussion_hash[key]
-    # end
-  end
-
-  file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
-    f.write(rss)
-    f.close
-    puts "wrote to #{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss"
+    file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
+      f.write(rss)
+      f.close
+      puts "wrote to #{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss"
+    end
   end
 end
 puts "script finished"
