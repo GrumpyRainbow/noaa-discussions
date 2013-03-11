@@ -57,7 +57,7 @@ class HPC
       disc_content = nil
 
       doc.xpath('//div[@id = "printarea"]').each do |i|
-        disc_content = i.text
+        disc_content = i
       end
       discussion_hash[url] = disc_content
     end
