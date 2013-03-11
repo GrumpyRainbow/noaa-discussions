@@ -31,6 +31,7 @@ discussion_hash.keys.each do |key|
       maker.channel.about = "http://www.grumpyrainbow.com/feeds/#{ARGV[0].downcase}/#{discussion_id}"
       maker.channel.title = "#{ARGV[0]} - #{title}"
       maker.channel.link = key
+      maker.channel.description = "#{ARGV[0]} - #{title}"
 
       maker.items.new_item do |item|
         item.title = "#{ARGV[0]} - #{title}"
