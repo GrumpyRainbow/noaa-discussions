@@ -41,7 +41,7 @@ discussion_hash.keys.each do |key|
         item.title = "#{ARGV[0]} - #{title}"
         item.updated = Time.now.rfc822
         item.description = discussion_hash[key]
-        new_item_time = item.description.match(time_regex).to_s
+        new_item_time = item.description.to_s.match(time_regex).to_s
       end
     end
 
@@ -50,7 +50,7 @@ discussion_hash.keys.each do |key|
     open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss") do |rss|
       feed = RSS::Parser.parse(rss)
       feed.items.each do |item|
-        old_item_time = item.description.math(time_regex).to_s
+        old_item_time = item.description.match(time_regex).to_s
       end
     end
 
