@@ -9,6 +9,8 @@ require 'time'
 
 feed_path = "/var/www/vhosts/brianlbridges.com/httpdocs/grumpyrainbow.com/feeds/"
 
+time_regex = /\d{3,4} (?:A|P)M \D{3} \D{3} \D{3} \d{1,2} \d{4}/
+
 @obj = case ARGV[0]
 
        when "HPC" then HPC.new
@@ -25,7 +27,7 @@ discussion_hash.keys.each do |key|
 
   if ARGV[0] == "HPC"
 
-    item_to_write = nil
+    new_item_time = nil
 
     rss = RSS::Maker.make("2.0") do |maker|
       maker.channel.author = "NOAA"
@@ -39,24 +41,20 @@ discussion_hash.keys.each do |key|
         item.title = "#{ARGV[0]} - #{title}"
         item.updated = Time.now.rfc822
         item.description = discussion_hash[key]
-        item_to_write = item.description
+        new_item_time = item.description.match(time_regex).to_s
       end
     end
 
-    item_to_read = nil
+    old_item_time = nil
 
     open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss") do |rss|
       feed = RSS::Parser.parse(rss)
-      feed.items.each { |item| item_to_read = item.description }
+      feed.items.each do |item|
+        old_item_time = item.description.math(time_regex).to_s
+      end
     end
 
-    puts "item_to_read"
-    puts item_to_read
-
-    puts "item_to_write"
-    puts item_to_write
-
-    if item_to_read != item_to_write
+    if new_item_time != old_item_time
       file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
         f.write(rss)
         f.close
