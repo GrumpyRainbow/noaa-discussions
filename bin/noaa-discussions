@@ -25,6 +25,8 @@ discussion_hash.keys.each do |key|
 
   if ARGV[0] == "HPC"
 
+    item_to_write = nil
+
     rss = RSS::Maker.make("2.0") do |maker|
       maker.channel.author = "NOAA"
       maker.channel.updated = Time.now.rfc822
@@ -37,13 +39,23 @@ discussion_hash.keys.each do |key|
         item.title = "#{ARGV[0]} - #{title}"
         item.updated = Time.now.rfc822
         item.description = discussion_hash[key]
+        item_to_write = item.description
       end
     end
 
-    file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
-      f.write(rss)
-      f.close
-      puts "wrote to #{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss"
+    item_to_read = nil
+
+    open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss") do |rss|
+      feed = RSS::Parser.parse(rss)
+      feed.items.each { |item| item_to_read = item.description }
+    end
+
+    if item_to_read != item_to_write
+      file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
+        f.write(rss)
+        f.close
+        puts "wrote to #{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss"
+      end
     end
   end
 end
