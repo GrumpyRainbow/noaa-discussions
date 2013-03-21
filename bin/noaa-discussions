@@ -50,6 +50,12 @@ discussion_hash.keys.each do |key|
       feed.items.each { |item| item_to_read = item.description }
     end
 
+    puts "item_to_read"
+    puts item_to_read
+
+    puts "item_to_write"
+    puts item_to_write
+
     if item_to_read != item_to_write
       file = File.open("#{feed_path}#{ARGV[0].downcase}/#{discussion_id}.rss", "w") do |f|
         f.write(rss)
